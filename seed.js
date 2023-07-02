@@ -18,6 +18,10 @@ module.exports = async function seed() {
 			firstName: 'Brandon',
 			lastName: 'Yeo',
 			password: bcrypt.hashSync('123', bcrypt.genSaltSync(saltRounds)),
+			// * the reason for using hashSync and genSaltSync is that this way is synchronous versus hash and genSalt which are asynchronous
+			// * the difference between synchronous and asynchronous is that synchronous is executed in sequence, while asynchronous is executed
+			// * after it is completed, it will work quietly in the 'background' and may take longer
+			// * async is better for responsiveness and used when performing time-consuming operations
 		});
 
 		console.log('User branyzp populated');

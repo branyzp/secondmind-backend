@@ -37,7 +37,7 @@ userRoute.get('/:id', async (req, res) => {
 userRoute.post('/new', async (req, res) => {
 	const { username, firstName, lastName, password } = req.body;
 	try {
-		const hashPassword = bcrypt.hash(password, saltRounds);
+		const hashPassword = bcrypt.hashSync(password, saltRounds);
 		const newUser = await User.create({
 			username: username,
 			firstName: firstName,
@@ -60,15 +60,37 @@ userRoute.post('/login', async (req, res) => {
 		if (searchForUser.length === 0) {
 			throw new Error('User not found.');
 		} else if (bcrypt.compareSync(password, search[0].password)) {
-			res
-				.status(StatusCodes.OK)
-				.send('successfully logged in: ' + searchForUser);
+			res.status(StatusCodes.OK).send(searchForUser);
 		}
 	} catch (err) {
 		console.log(err);
 		res.status(StatusCodes.BAD_REQUEST).send(err);
 	}
 });
+
+// user password update (weak)
+userRoute.put('/reset', async (req, res) => {
+	try {
+		const { username, password } = req.body;
+		await User.findOneAndUpdate({
+			username: username,
+			password: bcrypt.hashSync(password, saltRounds),
+		});
+		res
+			.status(StatusCodes.ACCEPTED)
+			.send('Password reset completed successfully');
+	} catch (err) {
+		console.log(err);
+		res.status(StatusCodes.BAD_REQUEST).send(err);
+	}
+});
+
+// TODO delete user
+userRoute.delete('/delete/:username', (req, res) => {
+    try {
+        
+    }
+})
 
 // TODO update new user
 userRoute.put('/:id/update', async (req, res) => {});
