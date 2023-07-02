@@ -51,3 +51,26 @@ userRoute.post('/new', async (req, res) => {
 		res.send(StatusCodes.BAD_REQUEST).send('Failed to create new user: ' + err);
 	}
 });
+
+// user login
+userRoute.post('/login', async (req, res) => {
+	const { username, password } = req.body;
+	try {
+		const searchForUser = await User.find({ username: username });
+		if (searchForUser.length === 0) {
+			throw new Error('User not found.');
+		} else if (bcrypt.compare(password, search[0].password)) {
+			res
+				.status(StatusCodes.OK)
+				.send('successfully logged in: ' + searchForUser);
+		}
+	} catch (err) {
+		console.log(err);
+		res.status(StatusCodes.BAD_REQUEST).send(err);
+	}
+});
+
+// TODO update new user
+userRoute.put('/:id/update', async (req, res) => {});
+
+module.exports = userRoute;

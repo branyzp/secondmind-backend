@@ -10,6 +10,10 @@ const port = process.env.PORT;
 const mongo_URI = process.env.MONGO_URI;
 const db = mongoose.connection;
 
+// controllers =====================================================================================================================================================================================
+const user = require('./controllers/userController');
+const seed = require('./seed');
+
 // connection to db=====================================================================================================================================================================================
 mongoose
 	.connect(mongo_URI)
@@ -37,4 +41,4 @@ app.listen(port, () => {
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-// app.use('/api/users', user);
+app.use('/api/users', user);
