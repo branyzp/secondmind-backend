@@ -59,7 +59,7 @@ userRoute.post('/login', async (req, res) => {
 		const searchForUser = await User.find({ username: username });
 		if (searchForUser.length === 0) {
 			throw new Error('User not found.');
-		} else if (bcrypt.compare(password, search[0].password)) {
+		} else if (bcrypt.compareSync(password, search[0].password)) {
 			res
 				.status(StatusCodes.OK)
 				.send('successfully logged in: ' + searchForUser);

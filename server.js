@@ -31,14 +31,19 @@ db.on('disconnected', () =>
 );
 
 // middleware ===============================================================================================================================================================================================
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use('/api/users', user);
+
 app.get('/', (req, res) => {
 	res.send('Hello World!');
+});
+
+app.get('/seed', async (req, res) => {
+	seed();
+	res.send('DB seeded.');
 });
 
 app.listen(port, () => {
 	console.log('Express now listening on port ' + port);
 });
-
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use('/api/users', user);

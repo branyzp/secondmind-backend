@@ -17,7 +17,7 @@ module.exports = async function seed() {
 			username: 'branyzp@gmail.com',
 			firstName: 'Brandon',
 			lastName: 'Yeo',
-			password: bcrypt.hash('123', bcrypt.genSalt(saltRounds)),
+			password: bcrypt.hashSync('123', bcrypt.genSaltSync(saltRounds)),
 		});
 
 		console.log('User branyzp populated');
