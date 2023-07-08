@@ -87,10 +87,11 @@ userRoute.put('/reset', async (req, res) => {
 
 // TODO delete user
 userRoute.delete('/delete/:username', (req, res) => {
-    try {
-        
-    }
-})
+	try {
+	} catch (err) {
+		console.log(err);
+	}
+});
 
 // TODO update new user
 userRoute.put('/:id/update', async (req, res) => {});
